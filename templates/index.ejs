@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="css/tacit-css.min.css"/>
+    <title>The Vulnerable Movie Center</title>
+    <style>
+      body {
+        padding-top:0px;
+      }
+      .thin {
+        margin-top:5px;
+        margin-bottom:5px;
+      }
+      #search-form {
+        text-align:right;
+        margin-bottom:0;
+        padding-bottom:0;
+      }
+      #search-result {
+        display: none;
+      }
+      #movie-data {
+        padding-bottom:10px;
+      }
+      #playbill {
+        vertical-align:top;
+        margin:10px;
+      }
+      #movie-details {
+        display:inline-block;
+        width:40%;
+      }
+      #search-term {
+        font-style: italic;
+      }
+    </style>
+
+  <script src="js/search.js"></script>
+  </head>
+  <body>
+    <section>
+      <h1 style="margin-top:5px">The Vulnerable Book Center</h1>
+      <hr class="thin">
+      <form id="search-form" onsubmit="return search()">
+        <input id="keyword" type="text" class="thin" placeholder="Search a Book"><button type="submit" class="thin">Go</button></form>
+      <hr class="thin">
+
+      <% if (isValidSession) { %>
+        <div style="text-align: right">
+          <a href="/user">Your profile</a>        
+        </div>
+      <% } %>
+    </section>
+
+    <section id="search-result">
+      You searched for <span id="search-term"></span>
+      <p>Waiting for server's response...</p>
+    </section>
+
+    <section id="movie-data">
+      <img id="playbill" src="images/bookcoverSpringer.png"/>
+      <div id="movie-details">
+        <b>Title:</b> Computer Security and the Internet: Tools and Jewels<br/>
+        <b>Year:</b> 2020<br/>
+        <b>Written by:</b> van Oorschot, Paul C.<br/>
+        <b>Pages:</b> 352<br/>
+        <br/>
+        <b>Abstract:</b>
+        <p>This book provides a concise yet comprehensive overview of computer and Internet security, suitable for a one-term introductory course for junior/senior undergrad or first-year graduate students. It is also suitable for self-study by anyone seeking a solid footing in security – including software developers and computing professionals, technical managers and government staff.</p>
+        <button type="submit">Read</button>
+      </div>
+    </section>
+
+    <section id="comments">
+      <form method="post" action="reviews">
+        <fieldset>
+          <textarea name="newReview" cols="80" rows="5" placeholder="Add your review"></textarea>
+          <% if (!isValidSession) { %>
+            <div>You need a <a href="session/new"">valid session</a> to submit a review.</div>
+          <% } %>
+          <button type="submit">Submit</button>  
+        </fieldset>
+      </form>
+      <hr>
+      <h2>Comments</h2>
+      <dl>
+        <% reviews.forEach(review => {%>
+          <dt><%= username %></dt><dd><%= review %></dd>
+        <% }); %>
+      </dl>
+    </section>
+  </body>
+</html>
